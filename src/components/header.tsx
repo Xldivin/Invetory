@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   Menu, 
   Search, 
@@ -59,8 +60,11 @@ export function Header({
   language,
   onLanguageChange 
 }: HeaderProps) {
+  const { t } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [expandedItems, setExpandedItems] = useState<string[]>(['products']);
+  const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
+  const languageDropdownRef = useRef<HTMLDivElement>(null);
 
   const languages = [
     { code: 'en', name: 'English', flag: '🇬🇧' },
@@ -69,69 +73,69 @@ export function Header({
   ];
 
   const navItems: NavItem[] = [
-    { id: 'dashboard', label: 'Dashboard', icon: Home },
+    { id: 'dashboard', label: t('navigation.dashboard'), icon: Home },
     { 
       id: 'products', 
-      label: 'Product Management', 
+      label: t('navigation.productManagement'), 
       icon: Package, 
-      badge: 'New',
+      badge: t('common.new'),
       subItems: [
-        { id: 'product-list', label: 'Products List' },
-        { id: 'add-product', label: 'Add Product' },
-        { id: 'inventory-tracking', label: 'Inventory Tracking' },
-        { id: 'analytics', label: 'Sales Analytics' }
+        { id: 'product-list', label: t('navigation.productsList') },
+        { id: 'add-product', label: t('navigation.addProduct') },
+        { id: 'inventory-tracking', label: t('navigation.inventoryTracking') },
+        { id: 'analytics', label: t('navigation.salesAnalytics') }
       ]
     },
     { 
       id: 'warehouses', 
-      label: 'Warehouses', 
+      label: t('navigation.warehouses'), 
       icon: Warehouse,
       subItems: [
-        { id: 'warehouses', label: 'All Warehouses' },
-        { id: 'stock-transfer', label: 'Stock Transfer' }
+        { id: 'warehouses', label: t('navigation.allWarehouses') },
+        { id: 'stock-transfer', label: t('navigation.stockTransfer') }
       ]
     },
     { 
       id: 'orders', 
-      label: 'Orders', 
+      label: t('navigation.orders'), 
       icon: ShoppingCart, 
       badge: '12',
       subItems: [
-        { id: 'orders', label: 'All Orders' },
-        { id: 'create-order', label: 'Create Order' }
+        { id: 'orders', label: t('navigation.allOrders') },
+        { id: 'create-order', label: t('navigation.createOrder') }
       ]
     },
-    { id: 'customers', label: 'Customers', icon: Users },
+    { id: 'customers', label: t('navigation.customers'), icon: Users },
     { 
       id: 'reports', 
-      label: 'Reports', 
+      label: t('navigation.reports'), 
       icon: BarChart3,
       subItems: [
-        { id: 'reports', label: 'Reports Dashboard' },
-        { id: 'inventory-reports', label: 'Inventory Reports' },
-        { id: 'sales-reports', label: 'Sales Reports' },
-        { id: 'custom-report-builder', label: 'Custom Reports' }
+        { id: 'reports', label: t('navigation.reportsDashboard') },
+        { id: 'inventory-reports', label: t('navigation.inventoryReports') },
+        { id: 'sales-reports', label: t('navigation.salesReports') },
+        { id: 'custom-report-builder', label: t('navigation.customReports') }
       ]
     },
     { 
       id: 'settings', 
-      label: 'Settings', 
+      label: t('navigation.settings'), 
       icon: Settings,
       subItems: [
-        { id: 'settings', label: 'General Settings' },
-        { id: 'user-management', label: 'User Management' },
-        { id: 'inventory-settings', label: 'Inventory Settings' },
-        { id: 'integration-settings', label: 'Integrations' }
+        { id: 'settings', label: t('header.settings') },
+        { id: 'user-management', label: t('navigation.userManagement') },
+        { id: 'inventory-settings', label: t('navigation.inventorySettings') },
+        { id: 'integration-settings', label: t('navigation.integrationSettings') }
       ]
     },
     { 
       id: 'notifications', 
-      label: 'Notifications', 
+      label: t('navigation.notifications'), 
       icon: Bell, 
       badge: '3',
       subItems: [
-        { id: 'notifications', label: 'Notifications Center' },
-        { id: 'alert-preferences', label: 'Alert Preferences' }
+        { id: 'notifications', label: t('navigation.notificationsCenter') },
+        { id: 'alert-preferences', label: t('navigation.alertPreferences') }
       ]
     }
   ];
@@ -153,14 +157,31 @@ export function Header({
 
   const currentLanguage = languages.find(lang => lang.code === language) || languages[0];
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (languageDropdownRef.current && !languageDropdownRef.current.contains(event.target as Node)) {
+        setLanguageDropdownOpen(false);
+      }
+    };
+
+    if (languageDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [languageDropdownOpen]);
+
   return (
     <>
-      <header className="h-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 flex items-center px-4 lg:px-6">
-        <div className="flex items-center space-x-4 flex-1">
+      <header className="h-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 flex items-center px-2 sm:px-4 lg:px-6">
+        <div className="flex items-center space-x-2 sm:space-x-4 flex-1 min-w-0">
           {/* Mobile menu button */}
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="sm" className="lg:hidden">
+              <Button variant="ghost" size="sm" className="lg:hidden flex-shrink-0">
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
@@ -264,12 +285,12 @@ export function Header({
           </Sheet>
 
           {/* Desktop menu toggle */}
-          <Button variant="ghost" size="sm" className="hidden lg:flex" onClick={onMenuClick}>
+          <Button variant="ghost" size="sm" className="hidden lg:flex flex-shrink-0" onClick={onMenuClick}>
             <Menu className="h-5 w-5" />
           </Button>
 
           {/* Logo - Desktop only */}
-          <div className="hidden lg:flex items-center space-x-2">
+          <div className="hidden lg:flex items-center space-x-2 flex-shrink-0">
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
               <Package className="w-4 h-4 text-white" />
             </div>
@@ -277,47 +298,60 @@ export function Header({
           </div>
 
           {/* Search */}
-          <div className="flex-1 max-w-lg">
+          <div className="flex-1 max-w-lg min-w-0">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input
-                placeholder="Search products, orders, customers..."
-                className="pl-10 bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                placeholder={t('header.searchPlaceholder')}
+                className="pl-10 bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 w-full"
               />
             </div>
           </div>
         </div>
 
         {/* Right side actions */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
           {/* Language Selector */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="flex items-center space-x-2">
+          <div className="relative" ref={languageDropdownRef}>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3"
+              onClick={() => setLanguageDropdownOpen(!languageDropdownOpen)}
+            >
                 <span className="text-lg">{currentLanguage.flag}</span>
-                <span className="hidden md:inline text-sm">{currentLanguage.name}</span>
+              <span className="hidden sm:inline text-sm">{currentLanguage.name}</span>
                 <ChevronDown className="h-3 w-3" />
               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Select Language</DropdownMenuLabel>
-              <DropdownMenuSeparator />
+            
+            {languageDropdownOpen && (
+              <div className="absolute top-full right-0 mt-1 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg z-50">
+                <div className="py-1">
+                  <div className="px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-gray-700">
+                    {t('header.selectLanguage')}
+                  </div>
               {languages.map((lang) => (
-                <DropdownMenuItem
+                    <button
                   key={lang.code}
-                  onClick={() => onLanguageChange(lang.code)}
-                  className="flex items-center space-x-2"
+                      onClick={() => {
+                        console.log('Language clicked:', lang.code);
+                        onLanguageChange(lang.code);
+                        setLanguageDropdownOpen(false);
+                      }}
+                      className="w-full flex items-center space-x-2 px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
                 >
                   <span>{lang.flag}</span>
                   <span>{lang.name}</span>
                   {language === lang.code && <span className="ml-auto">✓</span>}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Dark Mode Toggle */}
-          <Button variant="ghost" size="sm" onClick={onDarkModeToggle}>
+          <Button variant="ghost" size="sm" className="flex-shrink-0" onClick={onDarkModeToggle}>
             {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </Button>
 
@@ -325,7 +359,7 @@ export function Header({
           <Button 
             variant="ghost" 
             size="sm" 
-            className="relative"
+            className="relative flex-shrink-0"
             onClick={() => onSectionChange('notifications')}
           >
             <Bell className="h-4 w-4" />
@@ -337,30 +371,30 @@ export function Header({
           {/* Profile Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="flex items-center space-x-2">
+              <Button variant="ghost" size="sm" className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
                 <Avatar className="h-6 w-6">
                   <AvatarImage src="/placeholder-avatar.jpg" />
                   <AvatarFallback>JD</AvatarFallback>
                 </Avatar>
-                <span className="hidden md:inline text-sm">John Doe</span>
+                <span className="hidden sm:inline text-sm">John Doe</span>
                 <ChevronDown className="h-3 w-3" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>{t('header.myAccount')}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => onSectionChange('settings')}>
                 <User className="mr-2 h-4 w-4" />
-                Profile
+                {t('header.profile')}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => onSectionChange('settings')}>
                 <Settings className="mr-2 h-4 w-4" />
-                Settings
+                {t('header.settings')}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-red-600">
                 <LogOut className="mr-2 h-4 w-4" />
-                Log out
+                {t('header.logout')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

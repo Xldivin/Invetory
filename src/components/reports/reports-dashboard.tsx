@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   BarChart3, 
   FileText, 
@@ -77,6 +78,7 @@ const quickStats = [
 ];
 
 export function ReportsDashboard({ onNavigateToReport }: ReportsDashboardProps) {
+  const { t } = useTranslation();
   const getColorClasses = (color: string) => {
     switch (color) {
       case 'blue':

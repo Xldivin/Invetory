@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   Plus, 
   Search, 
@@ -78,6 +79,7 @@ const mockWarehouses: Warehouse[] = [
 ];
 
 export function WarehousesList({ onViewDetails }: WarehousesListProps) {
+  const { t } = useTranslation();
   const [warehouses] = useState<Warehouse[]>(mockWarehouses);
   const [searchTerm, setSearchTerm] = useState('');
 

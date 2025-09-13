@@ -11,10 +11,6 @@ export function SalesReports({ onBack }: SalesReportsProps) {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
-        <Button variant="outline" size="sm" onClick={onBack}>
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Reports
-        </Button>
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">Sales Reports</h1>
           <p className="text-gray-600">Sales performance and customer analytics</p>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Settings, Building, Globe, DollarSign, Upload } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -8,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Textarea } from '../ui/textarea';
 
 export function GeneralSettings() {
+  const { t } = useTranslation();
   const [companyName, setCompanyName] = useState('InventoryPro Solutions');
   const [companyAddress, setCompanyAddress] = useState('Plot 123, Industrial Area, Kampala, Uganda');
   const [currency, setCurrency] = useState('UGX');

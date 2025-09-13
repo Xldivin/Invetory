@@ -177,15 +177,17 @@ export function WarehouseDetails({ onBack }: WarehouseDetailsProps) {
       </div>
 
       {/* Main Content Tabs */}
-      <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="stock">Stock Details</TabsTrigger>
-          <TabsTrigger value="transfers">Transfer History</TabsTrigger>
-          <TabsTrigger value="analytics">Analytics</TabsTrigger>
-        </TabsList>
+      <Tabs defaultValue="overview" className="space-y-4 px-2 sm:px-0">
+        <div className="overflow-x-auto -mx-2 sm:overflow-hidden sm:mx-0">
+          <TabsList className="inline-flex w-full min-w-max mx-2 sm:mx-0 sm:grid sm:grid-cols-4 sm:min-w-0">
+            <TabsTrigger value="overview" className="flex-1 text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3">Overview</TabsTrigger>
+            <TabsTrigger value="stock" className="flex-1 text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3">Stock</TabsTrigger>
+            <TabsTrigger value="transfers" className="flex-1 text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3">Transfers</TabsTrigger>
+            <TabsTrigger value="analytics" className="flex-1 text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3">Analytics</TabsTrigger>
+          </TabsList>
+        </div>
 
-        <TabsContent value="overview" className="space-y-6">
+        <TabsContent value="overview" className="space-y-6 px-2 sm:px-0">
           {/* Warehouse Information */}
           <Card>
             <CardHeader>
@@ -255,7 +257,7 @@ export function WarehouseDetails({ onBack }: WarehouseDetailsProps) {
           </Card>
         </TabsContent>
 
-        <TabsContent value="stock" className="space-y-6">
+        <TabsContent value="stock" className="space-y-6 px-2 sm:px-0">
           <Card>
             <CardHeader>
               <CardTitle>Stock by Product</CardTitle>
@@ -296,7 +298,7 @@ export function WarehouseDetails({ onBack }: WarehouseDetailsProps) {
           </Card>
         </TabsContent>
 
-        <TabsContent value="transfers" className="space-y-6">
+        <TabsContent value="transfers" className="space-y-6 px-2 sm:px-0">
           <Card>
             <CardHeader>
               <CardTitle>Recent Transfers</CardTitle>
@@ -333,7 +335,7 @@ export function WarehouseDetails({ onBack }: WarehouseDetailsProps) {
           </Card>
         </TabsContent>
 
-        <TabsContent value="analytics" className="space-y-6">
+        <TabsContent value="analytics" className="space-y-6 px-2 sm:px-0">
           <Card>
             <CardHeader>
               <CardTitle>Utilization Trend</CardTitle>

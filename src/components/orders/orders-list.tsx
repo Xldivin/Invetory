@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   Plus, 
   Search, 
@@ -110,6 +111,7 @@ const mockOrders: Order[] = [
 ];
 
 export function OrdersList({ onViewDetails, onCreateOrder }: OrdersListProps) {
+  const { t } = useTranslation();
   const [orders] = useState<Order[]>(mockOrders);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');

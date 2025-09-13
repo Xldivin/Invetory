@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   TrendingUp, 
   Package, 
@@ -28,16 +29,16 @@ const salesData = [
 ];
 
 const topProducts = [
-  { name: 'Groundnuts TIRA', sales: 340, revenue: 289000, trend: 'up' },
-  { name: 'Groundnuts WHITE', sales: 220, revenue: 198000, trend: 'up' },
-  { name: 'Groundnuts MIXED', sales: 180, revenue: 144000, trend: 'down' }
+  { name: 'products.groundnutsTira', sales: 340, revenue: 289000, trend: 'up' },
+  { name: 'products.groundnutsWhite', sales: 220, revenue: 198000, trend: 'up' },
+  { name: 'products.groundnutsMixed', sales: 180, revenue: 144000, trend: 'down' }
 ];
 
 const recentActivity = [
-  { id: 1, action: 'Stock updated', product: 'Groundnuts TIRA', time: '2 minutes ago', type: 'stock' },
+  { id: 1, action: 'Stock updated', product: 'products.groundnutsTira', time: '2 minutes ago', type: 'stock' },
   { id: 2, action: 'New order received', product: 'Order #1234', time: '5 minutes ago', type: 'order' },
-  { id: 3, action: 'Low stock alert', product: 'Groundnuts WHITE', time: '10 minutes ago', type: 'alert' },
-  { id: 4, action: 'Product added', product: 'Groundnuts PREMIUM', time: '1 hour ago', type: 'product' }
+  { id: 3, action: 'Low stock alert', product: 'products.groundnutsWhite', time: '10 minutes ago', type: 'alert' },
+  { id: 4, action: 'Product added', product: 'products.groundnutsPremium', time: '1 hour ago', type: 'product' }
 ];
 
 interface DashboardOverviewProps {
@@ -45,6 +46,8 @@ interface DashboardOverviewProps {
 }
 
 export function DashboardOverview({ onNavigate }: DashboardOverviewProps = {}) {
+  const { t } = useTranslation();
+  
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('rw-RW', { 
       style: 'currency', 
@@ -54,18 +57,18 @@ export function DashboardOverview({ onNavigate }: DashboardOverviewProps = {}) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6 p-2 sm:p-0">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-semibold text-gray-900">Dashboard Overview</h1>
-        <p className="text-gray-600">Welcome back! Here's what's happening with your inventory.</p>
+      <div className="px-2 sm:px-0">
+        <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">{t('dashboard.title')}</h1>
+        <p className="text-sm sm:text-base text-gray-600">{t('dashboard.welcome')} {t('dashboard.overview')}</p>
       </div>
 
       {/* Key Metrics */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <Card className="p-4 sm:p-6">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 p-0">
-            <CardTitle className="text-xs sm:text-sm font-medium">Total Items</CardTitle>
+            <CardTitle className="text-xs sm:text-sm font-medium">{t('dashboard.totalProducts')}</CardTitle>
             <Package className="h-3 w-3 sm:h-4 sm:w-4 text-blue-600" />
           </CardHeader>
           <CardContent className="p-0 pt-2">
@@ -79,7 +82,7 @@ export function DashboardOverview({ onNavigate }: DashboardOverviewProps = {}) {
 
         <Card className="p-4 sm:p-6">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 p-0">
-            <CardTitle className="text-xs sm:text-sm font-medium">Low Stock</CardTitle>
+            <CardTitle className="text-xs sm:text-sm font-medium">{t('products.lowStock')}</CardTitle>
             <AlertTriangle className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-600" />
           </CardHeader>
           <CardContent className="p-0 pt-2">
@@ -93,7 +96,7 @@ export function DashboardOverview({ onNavigate }: DashboardOverviewProps = {}) {
 
         <Card className="p-4 sm:p-6">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 p-0">
-            <CardTitle className="text-xs sm:text-sm font-medium">Orders Today</CardTitle>
+            <CardTitle className="text-xs sm:text-sm font-medium">{t('dashboard.totalOrders')}</CardTitle>
             <ShoppingCart className="h-3 w-3 sm:h-4 sm:w-4 text-green-600" />
           </CardHeader>
           <CardContent className="p-0 pt-2">
@@ -107,7 +110,7 @@ export function DashboardOverview({ onNavigate }: DashboardOverviewProps = {}) {
 
         <Card className="p-4 sm:p-6">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 p-0">
-            <CardTitle className="text-xs sm:text-sm font-medium">Revenue Today</CardTitle>
+            <CardTitle className="text-xs sm:text-sm font-medium">{t('dashboard.totalRevenue')}</CardTitle>
             <DollarSign className="h-3 w-3 sm:h-4 sm:w-4 text-green-600" />
           </CardHeader>
           <CardContent className="p-0 pt-2">
@@ -121,14 +124,14 @@ export function DashboardOverview({ onNavigate }: DashboardOverviewProps = {}) {
       </div>
 
       {/* Charts and Analytics */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Revenue Trend</CardTitle>
-            <CardDescription>Monthly revenue over the past 9 months</CardDescription>
+            <CardTitle>{t('sales.revenue')} {t('sales.salesTrends')}</CardTitle>
+            <CardDescription>{t('sales.salesOverview')}</CardDescription>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={250}>
               <LineChart data={salesData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
@@ -148,11 +151,11 @@ export function DashboardOverview({ onNavigate }: DashboardOverviewProps = {}) {
 
         <Card>
           <CardHeader>
-            <CardTitle>Orders Trend</CardTitle>
-            <CardDescription>Number of orders per month</CardDescription>
+            <CardTitle>{t('orders.management')} {t('sales.salesTrends')}</CardTitle>
+            <CardDescription>{t('orders.allOrders')}</CardDescription>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={250}>
               <BarChart data={salesData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
@@ -166,11 +169,11 @@ export function DashboardOverview({ onNavigate }: DashboardOverviewProps = {}) {
       </div>
 
       {/* Top Products and Recent Activity */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Top Performing Products</CardTitle>
-            <CardDescription>Best selling products this month</CardDescription>
+            <CardTitle>{t('dashboard.topProducts')}</CardTitle>
+            <CardDescription>{t('sales.topSellingProducts')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {topProducts.map((product, index) => (
@@ -180,7 +183,7 @@ export function DashboardOverview({ onNavigate }: DashboardOverviewProps = {}) {
                     <Package className="w-5 h-5 text-blue-600" />
                   </div>
                   <div>
-                    <p className="font-medium text-gray-900">{product.name}</p>
+                    <p className="font-medium text-gray-900">{t(product.name)}</p>
                     <p className="text-sm text-gray-500">{product.sales} units sold</p>
                   </div>
                 </div>
@@ -204,8 +207,8 @@ export function DashboardOverview({ onNavigate }: DashboardOverviewProps = {}) {
 
         <Card>
           <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
-            <CardDescription>Latest updates and alerts</CardDescription>
+            <CardTitle>{t('dashboard.recentActivity')}</CardTitle>
+            <CardDescription>{t('dashboard.inventoryAlerts')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {recentActivity.map((activity) => (
@@ -223,7 +226,7 @@ export function DashboardOverview({ onNavigate }: DashboardOverviewProps = {}) {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-900">{activity.action}</p>
-                  <p className="text-sm text-gray-500">{activity.product}</p>
+                  <p className="text-sm text-gray-500">{activity.product.startsWith('products.') ? t(activity.product) : activity.product}</p>
                 </div>
                 <span className="text-xs text-gray-400">{activity.time}</span>
               </div>

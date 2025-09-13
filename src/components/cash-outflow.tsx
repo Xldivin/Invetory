@@ -195,15 +195,6 @@ export function CashOutflow({ onNavigate }: CashOutflowProps) {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => onNavigate('cashflow')}
-            className="flex items-center gap-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Cashflow
-          </Button>
           <div>
             <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Cash Outflow</h1>
             <p className="text-gray-600 dark:text-gray-400">Track all business expenses and cash outflows</p>
@@ -259,7 +250,7 @@ export function CashOutflow({ onNavigate }: CashOutflowProps) {
                   <Label>Expense Category</Label>
                   <Select 
                     value={newTransaction.category} 
-                    onValueChange={(value) => setNewTransaction({...newTransaction, category: value})}
+                    onValueChange={(value: any) => setNewTransaction({...newTransaction, category: value})}
                   >
                     <SelectTrigger>
                       <SelectValue />

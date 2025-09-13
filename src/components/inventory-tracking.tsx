@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   ArrowLeft,
   TrendingUp,
@@ -113,6 +114,7 @@ interface InventoryTrackingProps {
 }
 
 export function InventoryTracking({ onNavigate }: InventoryTrackingProps) {
+  const { t } = useTranslation();
   const [inventoryData] = useState<InventoryEntry[]>(mockInventoryData);
   const [stockMovements] = useState<StockMovement[]>(mockStockMovements);
   const [searchTerm, setSearchTerm] = useState('');
@@ -159,38 +161,30 @@ export function InventoryTracking({ onNavigate }: InventoryTrackingProps) {
   const overstockItems = inventoryData.filter(item => item.closingStock >= item.maxStock);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6 p-2 sm:p-0">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => onNavigate('products')}
-            className="flex items-center gap-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Products
-          </Button>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-2 sm:px-0">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+
           <div>
-            <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Inventory Tracking</h1>
-            <p className="text-gray-600 dark:text-gray-400">Real-time inventory monitoring and stock movements</p>
+            <h1 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white">{t('inventory.title')}</h1>
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">{t('inventory.tracking')}</p>
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <Button variant="outline" size="sm">
             <Download className="w-4 h-4 mr-2" />
-            Export
+            {t('common.export')}
           </Button>
           <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
             <RefreshCw className="w-4 h-4 mr-2" />
-            Refresh
+            {t('common.refresh')}
           </Button>
         </div>
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 px-2 sm:px-0">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Stock Value</CardTitle>
@@ -276,14 +270,16 @@ export function InventoryTracking({ onNavigate }: InventoryTrackingProps) {
       </div>
 
       {/* Main Content */}
-      <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="overview">Stock Overview</TabsTrigger>
-          <TabsTrigger value="movements">Stock Movements</TabsTrigger>
-          <TabsTrigger value="alerts">Alerts & Issues</TabsTrigger>
-        </TabsList>
+      <Tabs defaultValue="overview" className="space-y-4 px-2 sm:px-0">
+        <div className="overflow-x-auto -mx-2 sm:overflow-hidden sm:mx-0">
+          <TabsList className="inline-flex w-full min-w-max mx-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:min-w-0">
+            <TabsTrigger value="overview" className="flex-1 text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3">Stock Overview</TabsTrigger>
+            <TabsTrigger value="movements" className="flex-1 text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3">Stock Movements</TabsTrigger>
+            <TabsTrigger value="alerts" className="flex-1 text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3">Alerts & Issues</TabsTrigger>
+          </TabsList>
+        </div>
 
-        <TabsContent value="overview" className="space-y-4">
+        <TabsContent value="overview" className="space-y-4 px-2 sm:px-0">
           <Card>
             <CardHeader>
               <CardTitle>Inventory Overview</CardTitle>
@@ -353,7 +349,7 @@ export function InventoryTracking({ onNavigate }: InventoryTrackingProps) {
           </Card>
         </TabsContent>
 
-        <TabsContent value="movements" className="space-y-4">
+        <TabsContent value="movements" className="space-y-4 px-2 sm:px-0">
           <Card>
             <CardHeader>
               <CardTitle>Recent Stock Movements</CardTitle>
@@ -404,7 +400,7 @@ export function InventoryTracking({ onNavigate }: InventoryTrackingProps) {
           </Card>
         </TabsContent>
 
-        <TabsContent value="alerts" className="space-y-4">
+        <TabsContent value="alerts" className="space-y-4 px-2 sm:px-0">
           <div className="grid gap-4">
             {/* Low Stock Alerts */}
             {lowStockItems.length > 0 && (

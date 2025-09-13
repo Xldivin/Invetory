@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Navigation } from './components/navigation';
 import { Header } from './components/header';
 import { DashboardOverview } from './components/dashboard-overview';
@@ -29,6 +30,7 @@ import { CashInflow } from './components/cash-inflow';
 import { CashOutflow } from './components/cash-outflow';
 
 export default function App() {
+  const { i18n } = useTranslation();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentPage, setCurrentPage] = useState('login');
   const [currentSection, setCurrentSection] = useState('dashboard');
@@ -36,16 +38,17 @@ export default function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [language, setLanguage] = useState('en');
 
-  // Initialize dark mode from localStorage
+  // Initialize dark mode and language from localStorage
   useEffect(() => {
     const savedDarkMode = localStorage.getItem('darkMode');
-    const savedLanguage = localStorage.getItem('language');
+    const savedLanguage = localStorage.getItem('i18nextLng') || localStorage.getItem('language') || 'en';
     
     if (savedDarkMode) {
       setDarkMode(JSON.parse(savedDarkMode));
     }
     if (savedLanguage) {
       setLanguage(savedLanguage);
+      i18n.changeLanguage(savedLanguage);
     }
   }, []);
 
@@ -69,7 +72,13 @@ export default function App() {
   };
 
   const handleLanguageChange = (newLanguage: string) => {
+    console.log('Changing language to:', newLanguage);
     setLanguage(newLanguage);
+    i18n.changeLanguage(newLanguage).then(() => {
+      console.log('Language changed successfully to:', newLanguage);
+    }).catch((error) => {
+      console.error('Error changing language:', error);
+    });
   };
 
   const handleSectionChange = (section: string) => {

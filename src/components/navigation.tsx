@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   Home, 
   Package, 
@@ -34,85 +35,86 @@ interface NavItem {
 }
 
 export function Navigation({ currentSection, onSectionChange, collapsed, onToggleCollapsed }: NavigationProps) {
+  const { t } = useTranslation();
   const [expandedItems, setExpandedItems] = useState<string[]>(['products']);
 
   const navItems: NavItem[] = [
-    { id: 'dashboard', label: 'Dashboard', icon: Home, badge: null },
+    { id: 'dashboard', label: t('navigation.dashboard'), icon: Home, badge: null },
     { 
       id: 'products', 
-      label: 'Product Management', 
+      label: t('navigation.productManagement'), 
       icon: Package, 
-      badge: 'New',
+      badge: t('common.new'),
       subItems: [
-        { id: 'product-list', label: 'Products List' },
-        { id: 'add-product', label: 'Add Product' },
-        { id: 'inventory-tracking', label: 'Inventory Tracking' },
-        { id: 'analytics', label: 'Sales Analytics' }
+        { id: 'product-list', label: t('navigation.productsList') },
+        { id: 'add-product', label: t('navigation.addProduct') },
+        { id: 'inventory-tracking', label: t('navigation.inventoryTracking') },
+        { id: 'analytics', label: t('navigation.salesAnalytics') }
       ]
     },
     { 
       id: 'warehouses', 
-      label: 'Warehouses', 
+      label: t('navigation.warehouses'), 
       icon: Warehouse, 
       badge: null,
       subItems: [
-        { id: 'warehouses', label: 'All Warehouses' }
+        { id: 'warehouses', label: t('navigation.allWarehouses') }
       ]
     },
     { 
       id: 'orders', 
-      label: 'Orders', 
+      label: t('navigation.orders'), 
       icon: ShoppingCart, 
       badge: '12',
       subItems: [
-        { id: 'orders', label: 'All Orders' },
-        { id: 'create-order', label: 'Create Order' }
+        { id: 'orders', label: t('navigation.allOrders') },
+        { id: 'create-order', label: t('navigation.createOrder') }
       ]
     },
-    { id: 'customers', label: 'Customers', icon: Users, badge: null },
+    { id: 'customers', label: t('navigation.customers'), icon: Users, badge: null },
     { 
       id: 'reports', 
-      label: 'Reports', 
+      label: t('navigation.reports'), 
       icon: BarChart3, 
       badge: null,
       subItems: [
-        { id: 'reports', label: 'Reports Dashboard' },
-        { id: 'inventory-reports', label: 'Inventory Reports' },
-        { id: 'sales-reports', label: 'Sales Reports' },
-        { id: 'custom-report-builder', label: 'Custom Reports' }
+        { id: 'reports', label: t('navigation.reportsDashboard') },
+        { id: 'inventory-reports', label: t('navigation.inventoryReports') },
+        { id: 'sales-reports', label: t('navigation.salesReports') },
+        { id: 'custom-report-builder', label: t('navigation.customReports') }
       ]
     },
     { 
       id: 'settings', 
-      label: 'Settings', 
+      label: t('navigation.settings'), 
       icon: Settings, 
       badge: null,
       subItems: [
-        { id: 'settings', label: 'General Settings' },
-        { id: 'user-management', label: 'User Management' },
-        { id: 'inventory-settings', label: 'Inventory Settings' },
-        { id: 'integration-settings', label: 'Integrations' }
+        { id: 'settings', label: t('header.settings') },
+        { id: 'user-management', label: t('navigation.userManagement') },
+        { id: 'inventory-settings', label: t('navigation.inventorySettings') },
+        { id: 'integration-settings', label: t('navigation.integrationSettings') }
       ]
     },
     { 
       id: 'notifications', 
-      label: 'Notifications', 
+      label: t('navigation.notifications'), 
       icon: Bell, 
       badge: '3',
       subItems: [
-        { id: 'notifications', label: 'Notifications Center' },
-        { id: 'alert-preferences', label: 'Alert Preferences' }
+        { id: 'notifications', label: t('navigation.notificationsCenter') },
+        { id: 'alert-preferences', label: t('navigation.alertPreferences') }
       ]
     },
     { 
       id: 'cashflow', 
-      label: 'Cashflow Management', 
+      label: t('navigation.cashflowManagement'), 
       icon: Banknote, 
       badge: null,
       subItems: [
-        { id: 'cashflow', label: 'Cashflow Overview' },
-        { id: 'cash-inflow', label: 'Cash Inflow' },
-        { id: 'cash-outflow', label: 'Cash Outflow' }
+        { id: 'cashflow', label: t('navigation.cashflowOverview') },
+        { id: 'cash-inflow', label: t('navigation.cashInflow') },
+        { id: 'cash-outflow', label: t('navigation.cashOutflow') }
       ]
     }
   ];

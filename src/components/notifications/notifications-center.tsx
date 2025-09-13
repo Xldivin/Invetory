@@ -1,10 +1,12 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Bell, AlertTriangle, Package, Settings } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 
 export function NotificationsCenter() {
+  const { t } = useTranslation();
   const notifications = [
     { id: 1, type: 'alert', title: 'Low Stock Alert', message: 'Groundnuts WHITE is running low (180 units)', time: '2 hours ago' },
     { id: 2, type: 'info', title: 'Order Received', message: 'New order ORD-2025-001 from Acme Trading', time: '4 hours ago' },

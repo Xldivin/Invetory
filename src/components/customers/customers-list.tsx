@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   Users, 
   Plus, 
@@ -126,6 +127,7 @@ interface CustomersListProps {
 }
 
 export function CustomersList({ onViewDetails, onCreateCustomer }: CustomersListProps) {
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [sortBy, setSortBy] = useState('name');

@@ -11,10 +11,6 @@ export function CustomReportBuilder({ onBack }: CustomReportBuilderProps) {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
-        <Button variant="outline" size="sm" onClick={onBack}>
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Reports
-        </Button>
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">Custom Report Builder</h1>
           <p className="text-gray-600">Create custom reports with drag-and-drop interface</p>

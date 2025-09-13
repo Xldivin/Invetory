@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   Plus, 
   Search, 
@@ -46,6 +47,7 @@ interface ProductManagementProps {
 }
 
 export function ProductManagement({ onNavigate }: ProductManagementProps) {
+  const { t } = useTranslation();
   const [products] = useState<Product[]>(mockProducts);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
   const [searchTerm, setSearchTerm] = useState('');
@@ -92,21 +94,21 @@ export function ProductManagement({ onNavigate }: ProductManagementProps) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6 p-2 sm:p-0">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-2 sm:px-0">
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Product Management</h1>
-          <p className="text-gray-600 dark:text-gray-400">Manage your groundnut inventory and track sales performance</p>
+          <h1 className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white">{t('products.title')}</h1>
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">{t('products.productDescription')}</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <Button 
             variant="outline" 
             onClick={() => onNavigate('inventory-tracking')}
             className="flex items-center gap-2"
           >
             <Activity className="w-4 h-4" />
-            Inventory Tracking
+            {t('inventory.tracking')}
           </Button>
           <Button 
             variant="outline" 
@@ -114,23 +116,23 @@ export function ProductManagement({ onNavigate }: ProductManagementProps) {
             className="flex items-center gap-2"
           >
             <BarChart3 className="w-4 h-4" />
-            Sales Analytics
+            {t('sales.analytics')}
           </Button>
           <Button 
             className="bg-blue-600 hover:bg-blue-700 text-white"
             onClick={() => setShowAddModal(true)}
           >
             <Plus className="w-4 h-4 mr-2" />
-            Add Product
+            {t('products.addProduct')}
           </Button>
         </div>
       </div>
 
       {/* Overview Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 px-2 sm:px-0">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Inventory Value</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('inventory.stockValue')}</CardTitle>
             <DollarSign className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
@@ -144,7 +146,7 @@ export function ProductManagement({ onNavigate }: ProductManagementProps) {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('sales.revenue')}</CardTitle>
             <TrendingUp className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
@@ -158,37 +160,37 @@ export function ProductManagement({ onNavigate }: ProductManagementProps) {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Low Stock Alerts</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('products.lowStock')}</CardTitle>
             <AlertTriangle className="h-4 w-4 text-yellow-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-yellow-600">{lowStockCount}</div>
-            <p className="text-xs text-gray-600">Products below minimum stock</p>
+            <p className="text-xs text-gray-600">{t('products.stockLevel')}</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Out of Stock</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('products.outOfStock')}</CardTitle>
             <Package className="h-4 w-4 text-red-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-red-600">{outOfStockCount}</div>
-            <p className="text-xs text-gray-600">Products unavailable</p>
+            <p className="text-xs text-gray-600">{t('products.inStock')}</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Filters and Controls */}
-      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <div className="flex flex-col sm:flex-row gap-2 flex-1">
+      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between px-2 sm:px-0">
+        <div className="flex flex-col sm:flex-row gap-2 flex-1 w-full">
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <Input
               placeholder="Search products..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
+              className="pl-10 w-full"
             />
           </div>
           <Select value={selectedVariant} onValueChange={setSelectedVariant}>
@@ -204,7 +206,7 @@ export function ProductManagement({ onNavigate }: ProductManagementProps) {
           </Select>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
           <Button
             variant={viewMode === 'list' ? 'default' : 'outline'}
             size="sm"

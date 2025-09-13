@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   ArrowLeft,
   TrendingUp,
@@ -108,6 +109,7 @@ interface SalesAnalyticsProps {
 }
 
 export function SalesAnalytics({ onNavigate }: SalesAnalyticsProps) {
+  const { t } = useTranslation();
   const [selectedTimeframe, setSelectedTimeframe] = useState<string>('month');
   const [selectedProduct, setSelectedProduct] = useState<string>('all');
 
@@ -129,24 +131,15 @@ export function SalesAnalytics({ onNavigate }: SalesAnalyticsProps) {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => onNavigate('products')}
-            className="flex items-center gap-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Products
-          </Button>
           <div>
-            <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Sales Analytics</h1>
-            <p className="text-gray-600 dark:text-gray-400">Comprehensive sales performance analysis</p>
+            <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">{t('sales.title')}</h1>
+            <p className="text-gray-600 dark:text-gray-400">{t('sales.salesPerformance')}</p>
           </div>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm">
             <Download className="w-4 h-4 mr-2" />
-            Export Report
+            {t('reports.exportReport')}
           </Button>
         </div>
       </div>
@@ -155,24 +148,24 @@ export function SalesAnalytics({ onNavigate }: SalesAnalyticsProps) {
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
         <Select value={selectedTimeframe} onValueChange={setSelectedTimeframe}>
           <SelectTrigger className="w-full sm:w-[180px]">
-            <SelectValue placeholder="Select timeframe" />
+            <SelectValue placeholder={t('common.period')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="week">This Week</SelectItem>
-            <SelectItem value="month">This Month</SelectItem>
-            <SelectItem value="quarter">This Quarter</SelectItem>
-            <SelectItem value="year">This Year</SelectItem>
+            <SelectItem value="week">{t('common.thisWeek')}</SelectItem>
+            <SelectItem value="month">{t('common.thisMonth')}</SelectItem>
+            <SelectItem value="quarter">{t('common.thisYear')}</SelectItem>
+            <SelectItem value="year">{t('common.thisYear')}</SelectItem>
           </SelectContent>
         </Select>
         <Select value={selectedProduct} onValueChange={setSelectedProduct}>
           <SelectTrigger className="w-full sm:w-[180px]">
-            <SelectValue placeholder="Filter by product" />
+            <SelectValue placeholder={`${t('common.filter')} ${t('products.title')}`} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Products</SelectItem>
-            <SelectItem value="tira">Groundnuts TIRA</SelectItem>
-            <SelectItem value="white">Groundnuts WHITE</SelectItem>
-            <SelectItem value="mixed">Groundnuts MIXED</SelectItem>
+            <SelectItem value="all">{`${t('common.all')} ${t('products.title')}`}</SelectItem>
+            <SelectItem value="tira">{t('products.groundnutsTira')}</SelectItem>
+            <SelectItem value="white">{t('products.groundnutsWhite')}</SelectItem>
+            <SelectItem value="mixed">{t('products.groundnutsMixed')}</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -237,15 +230,17 @@ export function SalesAnalytics({ onNavigate }: SalesAnalyticsProps) {
       </div>
 
       {/* Main Analytics */}
-      <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="products">Product Performance</TabsTrigger>
-          <TabsTrigger value="trends">Sales Trends</TabsTrigger>
-          <TabsTrigger value="insights">Insights</TabsTrigger>
-        </TabsList>
+      <Tabs defaultValue="overview" className="space-y-4 px-2 sm:px-0">
+        <div className="overflow-x-auto -mx-2 sm:overflow-hidden sm:mx-0">
+          <TabsList className="inline-flex w-full min-w-max mx-2 sm:mx-0 sm:grid sm:grid-cols-4 sm:min-w-0">
+            <TabsTrigger value="overview" className="flex-1 text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3">Overview</TabsTrigger>
+            <TabsTrigger value="products" className="flex-1 text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3">Products</TabsTrigger>
+            <TabsTrigger value="trends" className="flex-1 text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3">Trends</TabsTrigger>
+            <TabsTrigger value="insights" className="flex-1 text-xs sm:text-sm whitespace-nowrap px-2 sm:px-3">Insights</TabsTrigger>
+          </TabsList>
+        </div>
 
-        <TabsContent value="overview" className="space-y-4">
+        <TabsContent value="overview" className="space-y-4 px-2 sm:px-0">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Sales Trend Chart */}
             <Card>
@@ -333,7 +328,7 @@ export function SalesAnalytics({ onNavigate }: SalesAnalyticsProps) {
           </Card>
         </TabsContent>
 
-        <TabsContent value="products" className="space-y-4">
+        <TabsContent value="products" className="space-y-4 px-2 sm:px-0">
           <Card>
             <CardHeader>
               <CardTitle>Product Performance</CardTitle>
@@ -391,7 +386,7 @@ export function SalesAnalytics({ onNavigate }: SalesAnalyticsProps) {
           </Card>
         </TabsContent>
 
-        <TabsContent value="trends" className="space-y-4">
+        <TabsContent value="trends" className="space-y-4 px-2 sm:px-0">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Sales Comparison */}
             <Card>
@@ -455,7 +450,7 @@ export function SalesAnalytics({ onNavigate }: SalesAnalyticsProps) {
           </div>
         </TabsContent>
 
-        <TabsContent value="insights" className="space-y-4">
+        <TabsContent value="insights" className="space-y-4 px-2 sm:px-0">
           <div className="grid gap-4">
             {/* Key Insights */}
             <Card>
