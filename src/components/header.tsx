@@ -16,7 +16,8 @@ import {
   Warehouse,
   ShoppingCart,
   Users,
-  BarChart3
+  BarChart3,
+  Building2
 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
@@ -106,6 +107,15 @@ export function Header({
       ]
     },
     { id: 'customers', label: t('navigation.customers'), icon: Users },
+    { 
+      id: 'suppliers', 
+      label: t('navigation.suppliers'), 
+      icon: Building2,
+      subItems: [
+        { id: 'suppliers', label: t('navigation.allSuppliers') },
+        { id: 'add-supplier', label: t('navigation.addSupplier') }
+      ]
+    },
     { 
       id: 'reports', 
       label: t('navigation.reports'), 

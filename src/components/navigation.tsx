@@ -11,7 +11,8 @@ import {
   ChevronDown,
   ChevronRight,
   Bell,
-  Banknote
+  Banknote,
+  Building2
 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
@@ -72,6 +73,16 @@ export function Navigation({ currentSection, onSectionChange, collapsed, onToggl
       ]
     },
     { id: 'customers', label: t('navigation.customers'), icon: Users, badge: null },
+    { 
+      id: 'suppliers', 
+      label: t('navigation.suppliers'), 
+      icon: Building2, 
+      badge: null,
+      subItems: [
+        { id: 'suppliers', label: t('navigation.allSuppliers') },
+        { id: 'add-supplier', label: t('navigation.addSupplier') }
+      ]
+    },
     { 
       id: 'reports', 
       label: t('navigation.reports'), 

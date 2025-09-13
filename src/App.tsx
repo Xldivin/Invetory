@@ -23,6 +23,9 @@ import { IntegrationSettings } from './components/settings/integration-settings'
 import { NotificationsCenter } from './components/notifications/notifications-center';
 import { AlertPreferences } from './components/notifications/alert-preferences';
 import { CustomersList } from './components/customers/customers-list';
+import { SuppliersList } from './components/suppliers/suppliers-list';
+import { AddSupplier } from './components/suppliers/add-supplier';
+import { AddProduct } from './components/products/add-product';
 import { InventoryTracking } from './components/inventory-tracking';
 import { SalesAnalytics } from './components/sales-analytics';
 import { CashflowManagement } from './components/cashflow-management';
@@ -149,7 +152,7 @@ export default function App() {
             {/* Product Management */}
             {currentSection === 'products' && <ProductManagement onNavigate={handleSectionChange} />}
             {currentSection === 'product-list' && <ProductManagement onNavigate={handleSectionChange} />}
-            {currentSection === 'add-product' && <ProductManagement onNavigate={handleSectionChange} />}
+            {currentSection === 'add-product' && <AddProduct onBack={() => setCurrentSection('products')} onProductAdded={() => setCurrentSection('products')} />}
             {currentSection === 'inventory-tracking' && <InventoryTracking onNavigate={handleSectionChange} />}
             {currentSection === 'analytics' && <SalesAnalytics onNavigate={handleSectionChange} />}
             
@@ -169,6 +172,10 @@ export default function App() {
             
             {/* Customers */}
             {currentSection === 'customers' && <CustomersList onViewDetails={(id) => setCurrentSection('customer-details')} onCreateCustomer={() => setCurrentSection('create-customer')} />}
+            
+            {/* Suppliers */}
+            {currentSection === 'suppliers' && <SuppliersList onViewDetails={(id) => setCurrentSection('supplier-details')} onCreateSupplier={() => setCurrentSection('add-supplier')} />}
+            {currentSection === 'add-supplier' && <AddSupplier onBack={() => setCurrentSection('suppliers')} onSupplierAdded={() => setCurrentSection('suppliers')} />}
             
             {/* Reports */}
             {currentSection === 'reports' && <ReportsDashboard onNavigateToReport={(report) => setCurrentSection(report)} />}
